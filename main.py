@@ -57,8 +57,6 @@ try:
     json_file = { "data": [] }
 
     i = 1
-    # json_file_length = 2 if batch_size % 2 == 0 else 1
-    # index_arr = []
     while i <= order_numbers:
         if (i % 5 == 0):
             event_submitted, result_event = create_order("cancelled")
@@ -67,20 +65,6 @@ try:
 
         json_file["data"].append(event_submitted)
         json_file["data"].append(result_event)
-        
-        # if json_file_length == batch_size:
-        #     create_json(json_file, path)
-        #     index_arr.append(json_file_length)
-        #     json_file_length -= batch_size
-        # elif i == order_numbers:
-        #     json_file2 = {"data": []}
-        #     json_file2["data"].append(json_file["data"][index_arr[-1]:])
-        #     create_json(json_file2, path)
-        # else:
-        #     if batch_size % 2 == 0:
-        #         json_file_length += 2
-        #     else:
-        #         json_file_length += 1
 
         i += 1
 
@@ -98,14 +82,10 @@ try:
         json_file2["data"].append(json_file["data"][start_index:last_index])
         create_json(json_file2, path)
 
-        print(f'start_index: {start_index}')
-        print(f'last_index: {last_index}')
-
         start_index = last_index
         last_index += batch_size
 
         i += 1
-
 
 except ValueError:
     print("Order numbers and batch size must be an integer")
@@ -113,5 +93,3 @@ except ValueError:
 except OSError:
     print("Creation of directory failed. Target directory already exists")
     print("Program is exited")
-except IndexError:
-    print("error")
